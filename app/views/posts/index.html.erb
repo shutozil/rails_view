@@ -1,7 +1,12 @@
+<% @greeting = capture do %>
+  <p>ようこそ！日付と時刻は<%= Time.now %>です</p>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
 
+<%= @greeting %>
 <table>
   <thead>
     <tr>
@@ -28,6 +33,8 @@
 </table>
 
 <br>
+
 <% benchmark "べんちまーく２" do %>
+  <%= @greeting %>
   <%= link_to 'New Post', new_post_path %>
 <% end %>
