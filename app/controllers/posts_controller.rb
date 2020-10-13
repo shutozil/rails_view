@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :set_request_variant, only: %i(index)
+  before_action :set_device_locale
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
@@ -70,5 +72,15 @@ class PostsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :content)
+    end
+
+    def set_request_variant
+      request.variant = :smartphone if request.from_smartphone?
+    end
+
+    def set_device_locale
+      p I18n.locale
+      I18n.locale = :mobile if request.from_smartphone?
+      p I18n.locale
     end
 end
