@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_request_variant, only: %i(index)
   before_action :set_device_locale
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -12,6 +12,14 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    # check duplicated render
+    begin
+      @post = Post.find(params[:id])
+    rescue => exception
+      @posts = Post.all
+      render action: :index and return
+    end
+    render action: :show
   end
 
   # GET /posts/new
